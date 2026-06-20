@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sreeja Thati | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0C10;
+      --bg2:       #0F1117;
+      --bg3:       #161B24;
+      --border:    #1E2535;
+      --border2:   #2A3347;
+      --gold:      #D4A843;
+      --gold2:     #F0C96A;
+      --text:      #E2E8F0;
+      --muted:     #7A8BA3;
+      --dim:       #4A5568;
+      --green:     #34D399;
+      --display:   'Playfair Display', Georgia, serif;
+      --body:      'Inter', system-ui, sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,12,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 56px;
+    }
+    .nav-logo { font-family: var(--mono); color: var(--text); font-size: 0.9rem; letter-spacing: 0.04em; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* subtle grid bg */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-label {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+
+    h1 {
+      font-family: var(--display); font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--text); line-height: 1.1; margin-bottom: 24px; font-weight: 700;
+    }
+    h1 em { font-style: normal; color: var(--gold); }
+    h1 .dim-line { color: var(--muted); }
+
+    .hero-sub {
+      color: var(--muted); font-size: 1rem; max-width: 560px; line-height: 1.75;
+      margin-bottom: 40px; font-weight: 300;
+    }
+
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+    .badge {
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      color: var(--muted); border: 1px solid var(--border2);
+      padding: 5px 12px; background: var(--bg3);
+    }
+    .badge.highlight { color: var(--gold); border-color: rgba(212,168,67,0.3); background: rgba(212,168,67,0.06); }
+    .badge.green { color: var(--green); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.06); }
+
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { padding: 11px 26px; font-size: 0.83rem; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-gold { background: var(--gold); color: var(--bg); }
+    .btn-gold:hover { background: var(--gold2); }
+    .btn-ghost { border: 1px solid var(--border2); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* TICKER */
+    .ticker { margin-top: 72px; overflow: hidden; border-top: 1px solid var(--border); padding: 10px 0; }
+    .ticker-track { display: flex; gap: 0; animation: ticker 35s linear infinite; width: max-content; }
+    .ticker-item { font-family: var(--mono); font-size: 0.67rem; color: var(--dim); letter-spacing: 0.14em; text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
+    .ticker-item .dot { color: var(--gold); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    section { padding: 88px 48px; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .s-eye { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .s-title {
+      font-family: var(--display); font-size: clamp(1.7rem, 3vw, 2.3rem);
+      color: var(--text); margin-bottom: 52px; padding-bottom: 18px;
+      border-bottom: 1px solid var(--border); position: relative;
+    }
+    .s-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 48px; height: 1px; background: var(--gold); }
+
+    section:nth-child(even) { background: var(--bg2); }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
+    .about-text p { color: var(--muted); margin-bottom: 16px; font-size: 0.94rem; line-height: 1.85; }
+    .about-text a { color: var(--gold); text-decoration: none; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat-card { background: var(--bg3); border: 1px solid var(--border); padding: 22px; }
+    .stat-n { font-family: var(--display); font-size: 1.9rem; color: var(--text); font-weight: 700; line-height: 1; }
+    .stat-n em { font-style: normal; color: var(--gold); font-size: 1.2rem; }
+    .stat-l { font-family: var(--mono); font-size: 0.67rem; color: var(--muted); margin-top: 7px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+    .proj-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 26px; display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .proj-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .proj-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0; transition: opacity 0.2s; }
+    .proj-card:hover::before { opacity: 1; }
+    .proj-tag { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .proj-card h3 { font-family: var(--display); font-size: 1rem; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+    .proj-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.75; flex: 1; margin-bottom: 18px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 18px; }
+    .stag { font-family: var(--mono); font-size: 0.62rem; background: var(--bg); color: var(--dim); padding: 3px 7px; border: 1px solid var(--border); letter-spacing: 0.04em; }
+    .proj-link { font-family: var(--mono); font-size: 0.72rem; color: var(--gold); text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; align-self: flex-start; }
+    .proj-link:hover { opacity: 0.7; }
+    .proj-link::after { content: ' ↗'; }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .sk-group { background: var(--bg3); border: 1px solid var(--border); padding: 22px; }
+    .sk-group h4 { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .sk-list { list-style: none; }
+    .sk-list li { font-size: 0.85rem; color: var(--muted); padding: 5px 0; border-bottom: 1px solid var(--bg); display: flex; align-items: center; gap: 8px; }
+    .sk-list li::before { content: '›'; color: var(--gold); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+    .exp-date { font-family: var(--mono); font-size: 0.7rem; color: var(--dim); letter-spacing: 0.06em; padding-top: 3px; }
+    .exp-role { font-weight: 600; color: var(--text); font-size: 0.97rem; margin-bottom: 3px; }
+    .exp-co { font-family: var(--mono); font-size: 0.72rem; color: var(--gold); margin-bottom: 10px; letter-spacing: 0.06em; }
+    .exp-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── OPEN SOURCE CALLOUT ── */
+    .oss-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      padding: 28px 32px;
+      display: flex; align-items: flex-start; gap: 20px;
+    }
+    .oss-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .oss-card h3 { font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .oss-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+    .oss-targets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .oss-tag { font-family: var(--mono); font-size: 0.65rem; color: var(--green); border: 1px solid rgba(52,211,153,0.25); padding: 3px 9px; background: rgba(52,211,153,0.05); letter-spacing: 0.06em; }
+
+    /* ── RESEARCH ── */
+    .research-card { background: var(--bg3); border: 1px solid var(--border); border-left: 2px solid var(--gold); padding: 26px 28px; margin-bottom: 16px; }
+    .research-card h3 { font-family: var(--display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+    .res-venue { font-family: var(--mono); font-size: 0.67rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    .research-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .contact-h { font-family: var(--display); font-size: 1.6rem; color: var(--text); line-height: 1.4; margin-bottom: 16px; }
+    .contact-sub { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .contact-links { display: flex; flex-direction: column; gap: 10px; }
+    .clink {
+      display: flex; align-items: center; gap: 14px; text-decoration: none;
+      color: var(--muted); font-size: 0.87rem;
+      padding: 14px 16px; border: 1px solid var(--border); background: var(--bg3);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .clink:hover { border-color: var(--border2); color: var(--gold); }
+    .cicon { width: 34px; height: 34px; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; color: var(--gold); flex-shrink: 0; }
+    .clabel { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; display: block; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.7rem; color: var(--dim); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 0.7rem; }
+      .hero, section { padding: 60px 20px; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .exp-item { grid-template-columns: 1fr; gap: 6px; }
+      footer { flex-direction: column; gap: 6px; padding: 16px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+      .proj-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">sreeja<span>.</span>dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <p class="hero-label">Open to SDE · AI/ML · Quant Roles · 2025–26</p>
+    <h1>
+      Sreeja Thati<br/>
+      <span class="dim-line">builds systems at the</span><br/>
+      edge of <em>finance</em> &amp; <em>intelligence.</em>
+    </h1>
+    <p class="hero-sub">
+      B.Tech CSE (AI &amp; ML) · VNRVJIET, Hyderabad · GPA 9.12/10<br/>
+      HFT infrastructure · RAG systems · Competitive programming · Published researcher.
+    </p>
+    <div class="hero-badges">
+      <span class="badge highlight">CF Specialist · 1489</span>
+      <span class="badge green">Published · ISL Recognition</span>
+      <span class="badge">IICPC Summer Trading 2026</span>
+      <span class="badge">GPA 9.12 / 10</span>
+      <span class="badge">Open to Internships &amp; Placements</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-gold">View Projects</a>
+      <a href="https://github.com/Sreejasudhakaran" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/sreeja-thati-85905a394/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="mailto:sreejasudhakaran06@gmail.com" class="btn btn-ghost">Email</a>
+    </div>
+
+    <div class="ticker">
+      <div class="ticker-track">
+        <span class="ticker-item">C++ <span class="dot">·</span></span>
+        <span class="ticker-item">Python <span class="dot">·</span></span>
+        <span class="ticker-item">FastAPI <span class="dot">·</span></span>
+        <span class="ticker-item">PostgreSQL <span class="dot">·</span></span>
+        <span class="ticker-item">Docker <span class="dot">·</span></span>
+        <span class="ticker-item">WebSocket <span class="dot">·</span></span>
+        <span class="ticker-item">HFT Infrastructure <span class="dot">·</span></span>
+        <span class="ticker-item">pgvector <span class="dot">·</span></span>
+        <span class="ticker-item">RAG Systems <span class="dot">·</span></span>
+        <span class="ticker-item">React · Next.js <span class="dot">·</span></span>
+        <span class="ticker-item">D3.js <span class="dot">·</span></span>
+        <span class="ticker-item">NLP Pipelines <span class="dot">·</span></span>
+        <span class="ticker-item">Codeforces Specialist <span class="dot">·</span></span>
+        <span class="ticker-item">Quantitative Finance <span class="dot">·</span></span>
+        <span class="ticker-item">System Design <span class="dot">·</span></span>
+        <span class="ticker-item">C++ <span class="dot">·</span></span>
+        <span class="ticker-item">Python <span class="dot">·</span></span>
+        <span class="ticker-item">FastAPI <span class="dot">·</span></span>
+        <span class="ticker-item">PostgreSQL <span class="dot">·</span></span>
+        <span class="ticker-item">Docker <span class="dot">·</span></span>
+        <span class="ticker-item">WebSocket <span class="dot">·</span></span>
+        <span class="ticker-item">HFT Infrastructure <span class="dot">·</span></span>
+        <span class="ticker-item">pgvector <span class="dot">·</span></span>
+        <span class="ticker-item">RAG Systems <span class="dot">·</span></span>
+        <span class="ticker-item">React · Next.js <span class="dot">·</span></span>
+        <span class="ticker-item">D3.js <span class="dot">·</span></span>
+        <span class="ticker-item">NLP Pipelines <span class="dot">·</span></span>
+        <span class="ticker-item">Codeforces Specialist <span class="dot">·</span></span>
+        <span class="ticker-item">Quantitative Finance <span class="dot">·</span></span>
+        <span class="ticker-item">System Design <span class="dot">·</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="s-eye">// 01 · About</p>
+    <h2 class="s-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Third-year B.Tech student in AI &amp; ML at VNR Vignana Jyothi Institute of Engineering &amp; Technology, Hyderabad — graduating May 2027, GPA 9.12/10.</p>
+        <p>I sit at the intersection of high-performance systems and intelligent applications. My IICPC benchmarking platform stress-tests C++ trading engines at HFT scale — 1000 concurrent bots, cgroup-isolated sandboxing, server-side p99 latency via <code>PERCENTILE_CONT</code>, and a live WebSocket leaderboard. That's not a demo; it runs.</p>
+        <p>On the research side, I have a peer-reviewed publication on Indian Sign Language recognition using MediaPipe, CNN, and Whisper — 99.16% accuracy, 93% weighted F1 — accepted in a Springer-indexed journal.</p>
+        <p>Currently a <strong>Codeforces Specialist (1489)</strong>, grinding patterns daily. Actively targeting internships and placements in SDE, AI/ML, and quant roles at firms like iRage, Graviton, Jane Street, Optiver, JPMorgan, and Goldman Sachs.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-n">9.12<em>/10</em></div>
+          <div class="stat-l">Current GPA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">1489</div>
+          <div class="stat-l">CF Rating · Specialist</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">8<em>+</em></div>
+          <div class="stat-l">Production Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">1</div>
+          <div class="stat-l">Peer-Reviewed Paper</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="s-eye">// 02 · Projects</p>
+    <h2 class="s-title">What I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-tag">HFT · IICPC 2026</div>
+        <h3>Distributed Trading Infrastructure Benchmarking Platform</h3>
+        <p>Production-grade platform that stress-tests contestant C++ trading engines. Sandboxed Docker execution (cgroup: 1 CPU, 256MB, 64 PIDs), 1000 concurrent asyncio bots, PostgreSQL p99 latency via PERCENTILE_CONT, and live WebSocket leaderboard. Composite score: 40% speed + 30% TPS + 30% correctness.</p>
+        <div class="stack">
+          <span class="stag">C++</span><span class="stag">Python</span><span class="stag">FastAPI</span>
+          <span class="stag">Docker</span><span class="stag">PostgreSQL</span><span class="stag">WebSocket</span><span class="stag">asyncio</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/Distributed-Trading-Infrastructure-Benchmarking-Platform-" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">AI · Decision Intelligence</div>
+        <h3>JARVIS – Intelligent Second Mind</h3>
+        <p>4-layer cognitive architecture for personal decision intelligence. Memory layer captures decisions with voice input and auto-tagging; RAG-powered replay finds semantically similar past decisions; weekly pattern analysis with AI coaching; full pgvector similarity search via sentence-transformers.</p>
+        <div class="stack">
+          <span class="stag">FastAPI</span><span class="stag">Next.js 14</span><span class="stag">pgvector</span>
+          <span class="stag">Supabase</span><span class="stag">HuggingFace</span><span class="stag">RAG</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/Intelligent-Second-Mind" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">NLP · Government Documents</div>
+        <h3>Government Document Summarizer</h3>
+        <p>Transformer-based abstractive summarization pipeline for dense government and policy documents. Multi-model NLP approach combining summarization, semantic embeddings, and classification across a 29-label taxonomy for structured extraction.</p>
+        <div class="stack">
+          <span class="stag">distilBART</span><span class="stag">Sentence-BERT</span>
+          <span class="stag">Zero-shot NLI</span><span class="stag">Streamlit</span><span class="stag">Python</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/summarizer_for_governmentdocs" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">Fintech · Risk Intelligence</div>
+        <h3>FinSight</h3>
+        <p>Real-time stock risk intelligence dashboard. Isolation Forest anomaly detection on live market data, JWT authentication, PostgreSQL persistence. Built from scratch to be fully defensible — every claim in the codebase is earned.</p>
+        <div class="stack">
+          <span class="stag">FastAPI</span><span class="stag">React</span><span class="stag">D3.js</span>
+          <span class="stag">PostgreSQL</span><span class="stag">Docker Compose</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/Finsight" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">NLP · Semantic Search</div>
+        <h3>AI Doc Search RAG Chatbot</h3>
+        <p>Document-grounded QA chatbot using retrieval-augmented generation. Embeds documents, performs semantic similarity search via pgvector, and synthesizes grounded answers. Supports multi-document corpora with source attribution.</p>
+        <div class="stack">
+          <span class="stag">RAG</span><span class="stag">pgvector</span><span class="stag">FastAPI</span>
+          <span class="stag">LangChain</span><span class="stag">Python</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/AI-Doc-Search-RAG-chatbot" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">AI · Math · RAG</div>
+        <h3>Math Agent RAG</h3>
+        <p>Retrieval-augmented agent for mathematical problem solving. Combines symbolic computation with RAG-based context retrieval to answer complex math queries with step-by-step grounded reasoning.</p>
+        <div class="stack">
+          <span class="stag">RAG</span><span class="stag">Python</span><span class="stag">pgvector</span>
+          <span class="stag">LLM</span><span class="stag">FastAPI</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/Math-Agent-RAG" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">File Systems · Hackathon</div>
+        <h3>SEFS – Semantic Entropy File System</h3>
+        <p>Semantic file management system that organises files by meaning rather than folder hierarchy. Uses NLP embeddings to cluster and retrieve files by intent, eliminating manual folder management entirely.</p>
+        <div class="stack">
+          <span class="stag">NLP</span><span class="stag">Embeddings</span><span class="stag">Python</span>
+          <span class="stag">FastAPI</span><span class="stag">React</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/SEMANTIC-ENTROPY-FILE-SYSTEM-SEFS-" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">Voice AI · Assistant</div>
+        <h3>Personal Voice Assistant</h3>
+        <p>End-to-end personal voice assistant with speech recognition, NLU, and task execution. Handles calendar queries, reminders, and information retrieval via natural spoken language commands.</p>
+        <div class="stack">
+          <span class="stag">Python</span><span class="stag">Speech Recognition</span>
+          <span class="stag">NLU</span><span class="stag">TTS</span>
+        </div>
+        <a href="https://github.com/Sreejasudhakaran/personal-voice-assistance" target="_blank" class="proj-link">GitHub</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="s-eye">// 03 · Experience</p>
+    <h2 class="s-title">Where I've Worked</h2>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-date">2026</div>
+        <div>
+          <div class="exp-role">IICPC Summer Trading Project — Platform Engineer</div>
+          <div class="exp-co">Indian Institute of Competitive Programming</div>
+          <p class="exp-desc">Designed and built the entire Distributed Trading Infrastructure Benchmarking Platform from scratch. Architected sandboxed C++ execution, a 1000-bot asyncio load fleet, PostgreSQL telemetry with composite scoring, and a live WebSocket leaderboard — fully Dockerized and deployed.</p>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2024</div>
+        <div>
+          <div class="exp-role">Software Development Intern</div>
+          <div class="exp-co">GetInterned</div>
+          <p class="exp-desc">Ranked top performer among 1000+ applicants. Delivered production-grade software across backend and ML components under real deadlines and engineering standards.</p>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2024</div>
+        <div>
+          <div class="exp-role">Software Intern</div>
+          <div class="exp-co">TechSonIx Solutions</div>
+          <p class="exp-desc">Contributed to production development, gaining hands-on exposure to professional engineering workflows and software delivery cycles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="s-eye">// 04 · Skills</p>
+    <h2 class="s-title">Technical Stack</h2>
+    <div class="skills-grid">
+      <div class="sk-group">
+        <h4>Languages</h4>
+        <ul class="sk-list">
+          <li>C++ (primary · competitive)</li>
+          <li>Python</li>
+          <li>SQL</li>
+          <li>TypeScript / JS</li>
+        </ul>
+      </div>
+      <div class="sk-group">
+        <h4>Backend &amp; Infra</h4>
+        <ul class="sk-list">
+          <li>FastAPI · Uvicorn</li>
+          <li>PostgreSQL · pgvector</li>
+          <li>Docker · Compose</li>
+          <li>WebSocket · asyncio</li>
+          <li>Redis</li>
+        </ul>
+      </div>
+      <div class="sk-group">
+        <h4>AI / ML</h4>
+        <ul class="sk-list">
+          <li>PyTorch · HuggingFace</li>
+          <li>RAG Pipelines</li>
+          <li>Sentence-BERT</li>
+          <li>NLP · Transformers</li>
+          <li>Anomaly Detection</li>
+        </ul>
+      </div>
+      <div class="sk-group">
+        <h4>Frontend</h4>
+        <ul class="sk-list">
+          <li>React · Next.js 14</li>
+          <li>D3.js</li>
+          <li>TypeScript</li>
+          <li>Tailwind CSS</li>
+          <li>Streamlit</li>
+        </ul>
+      </div>
+      <div class="sk-group">
+        <h4>Quant / Finance</h4>
+        <ul class="sk-list">
+          <li>HFT Infrastructure</li>
+          <li>Market Microstructure</li>
+          <li>Probability Theory</li>
+          <li>Options / Derivatives</li>
+          <li>Latency Benchmarking</li>
+        </ul>
+      </div>
+      <div class="sk-group">
+        <h4>Competitive Prog.</h4>
+        <ul class="sk-list">
+          <li>CF Specialist · 1489</li>
+          <li>Segment Trees · DP</li>
+          <li>Binary Search · Greedy</li>
+          <li>Game Theory · XOR</li>
+          <li>Hashing · Tries</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Open Source Callout -->
+    <div style="margin-top: 40px;">
+      <div class="oss-card">
+        <div class="oss-icon">🌿</div>
+        <div>
+          <h3>Starting Open Source Contributions</h3>
+          <p>Actively looking to make meaningful contributions to open source projects in the AI/ML, fintech, and systems space. Interested in both building and reviewing.</p>
+          <div class="oss-targets">
+            <span class="oss-tag">OpenBB</span>
+            <span class="oss-tag">vectorbt</span>
+            <span class="oss-tag">HuggingFace</span>
+            <span class="oss-tag">LangChain</span>
+            <span class="oss-tag">FastAPI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-inner">
+    <p class="s-eye">// 05 · Research</p>
+    <h2 class="s-title">Publications</h2>
+    <div class="research-card">
+      <h3>Indian Sign Language Recognition Using MediaPipe, CNN, and Whisper</h3>
+      <div class="res-venue">Springer-Indexed Journal · 2025 · Peer-Reviewed</div>
+      <p>Built a real-time ISL recognition pipeline combining MediaPipe hand landmark extraction, CNN-based gesture classification, and OpenAI Whisper for audio-to-text bridging. Achieved 99.16% accuracy and 93% weighted F1 across ISL gestures. Went through full peer review, revision, and author proof stages.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="s-eye">// 06 · Contact</p>
+    <h2 class="s-title">Get In Touch</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-h">Open to SDE, AI/ML &amp; Quant roles for 2025–26.</p>
+        <p class="contact-sub">Targeting HFT infrastructure, trading systems, and full-stack AI/ML roles at quant firms, fintech, and top product companies. If you're hiring or want to talk systems — reach out directly.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:sreejasudhakaran06@gmail.com" class="clink">
+          <div class="cicon">@</div>
+          <div><span class="clabel">Email</span>sreejasudhakaran06@gmail.com</div>
+        </a>
+        <a href="https://www.linkedin.com/in/sreeja-thati-85905a394/" target="_blank" class="clink">
+          <div class="cicon">in</div>
+          <div><span class="clabel">LinkedIn</span>sreeja-thati-85905a394</div>
+        </a>
+        <a href="https://github.com/Sreejasudhakaran" target="_blank" class="clink">
+          <div class="cicon">gh</div>
+          <div><span class="clabel">GitHub</span>Sreejasudhakaran</div>
+        </a>
+        <a href="https://codeforces.com" target="_blank" class="clink">
+          <div class="cicon">cf</div>
+          <div><span class="clabel">Codeforces</span>Specialist · 1489</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sreeja Thati · VNRVJIET Hyderabad</p>
+  <p>Deploy: push index.html to sreejasudhakaran.github.io</p>
+</footer>
+
+</body>
+</html>
